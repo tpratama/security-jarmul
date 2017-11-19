@@ -4,8 +4,10 @@ const exphbs = require('exphbs');
 const express = require('express');
 const path = require('path');
 const bodyParser = require('body-parser');
+const Bluebird = require('bluebird');
 const session = require('express-session');
 
+const cryptHelper = require('./helpers/crypt-helper');
 const db = require('./models/connection');
 
 const app = express();
@@ -36,9 +38,16 @@ const authMiddleware = (req, res, next) => {
 app.get('/', require('./handlers/home'));
 app.get('/home', require('./handlers/home'));
 app.get('/income', authMiddleware, require('./handlers/income'));
+app.get('/tes', (req, res) => {
+	Bluebird.resolve()
+		.then(() => {
+			return cryptHelper.decryptFile(__dirname + '/build/uploads/image_1511110558743.jpg.dat', req.session.user);
+		})
+		.then(() => console.log("DONE"));
+})
 
 app.post('/home/register', require('./handlers/user/register'));
 app.post('/home/login', require('./handlers/user/login'));
-app.post('/income/create', require('./handlers/income/create'));
+app.post('/income/create', require('./handlers/common/upload'), require('./handlers/income/create'));
 
 app.listen(3000, () => console.log('Server dijalankan pada port 3000'));

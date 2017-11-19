@@ -4,6 +4,7 @@ const Bluebird = require('bluebird');
 
 const flashHelper = require('../../helpers/flash-helper');
 const cryptHelper = require('../../helpers/crypt-helper');
+const upload = require('../common/upload.js');
 
 const Income = Bluebird.promisifyAll(mongoose.model('Income'));
 const User = Bluebird.promisifyAll(mongoose.model('User'));
@@ -14,6 +15,8 @@ module.exports = (req, res) => {
 	let incomeData = req.body;
 	incomeData.user = req.session.user._id;
 	
+	console.log(req.body);
+  
 	return Bluebird.resolve()
 		.then(() => {
 			return Income.create(incomeData);
