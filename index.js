@@ -39,5 +39,6 @@ app.get('/income', authMiddleware, require('./handlers/income'));
 
 app.post('/home/register', require('./handlers/user/register'));
 app.post('/home/login', require('./handlers/user/login'));
+app.post('/income/create', require('./handlers/income/create'));
 
 app.listen(3000, () => console.log('Server dijalankan pada port 3000'));

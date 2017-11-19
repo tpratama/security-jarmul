@@ -10,8 +10,8 @@
 		<div class="col-md-2 sidebar">
 			<div class="row">
 				<div class="col">
-					<h5><b>{{user}}</b></h5>
-					<h6>Balance : </br> <b>Rp. 100.000</b></h6>
+					<h5><b>{{user.name}}</b></h5>
+					<h6>Balance : </br> <b>Rp. {{#if balance}}{{balance}}{{else}}0{{/if}}</b></h6>
 					<button class="danger-btn">Logout</button>
 					<hr>
 				</div>
@@ -28,24 +28,41 @@
 		</div>
 		<div class="col-md-9">
 			{{> title-box title="Add New Income"}}
-			<div class="form-group row">
-			    <label for="inputName" class="col-sm-2 col-form-label">Name</label>
-			    <div class="col-sm-10">
-			      <input type="text" name="name" class="text-form-input" id="inputName" placeholder="Name">
-			    </div>
-			 </div>
-			 <div class="form-group row">
-			    <label for="inputUsername" class="col-sm-2 col-form-label">Username</label>
-			    <div class="col-sm-10">
-			      <input type="text" name="username" class="text-form-input" id="inputUsername" placeholder="Username">
-			    </div>
-			 </div>
-			 <div class="form-group row">
-			    <label for="inputPassword" class="col-sm-2 col-form-label">Password</label>
-			    <div class="col-sm-10">
-			      <input type="password" name="password" class="text-form-input" id="inputPassword" placeholder="Password">
-			    </div>
-			 </div>
+			{{> server-success-message}}
+			{{> server-error-message}}
+			
+			<form action="/income/create" method="POST">
+				<div class="form-group row">
+				    <label for="inputName" class="col-sm-2 col-sm-2form-label">Cost</label>
+				    <div class="col-sm-10">
+				      <input type="number" min="0" name="cost" class="text-form-input" placeholder="Cost">
+				    </div>
+				</div>
+				<div class="form-group row">
+					<label for="inputUsername" class="col-sm-2 col-form-label">Category</label>
+					<div class="col-sm-10">
+					 	<select name="category">
+					 		{{#each categories}}
+					 			<option value="{{this._id}}">{{this.name}}</option>
+					 		{{/each}}
+					 	</select>
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputUsername" class="col-sm-2 col-form-label">Date</label>
+					<div class="col-sm-10">
+					  <input type="date" name="date" class="text-form-input" placeholder="Date">
+					</div>
+				</div>
+				<div class="form-group row">
+					<label for="inputPassword" class="col-sm-2 col-form-label">Note</label>
+					<div class="col-sm-10">
+					  <textarea class="text-form-input" rows="5" name="note"></textarea>
+					</div>
+				</div>
+				</br>
+				<button type="submit" class="btn-simple float-right" style="margin-right: 10px">Save</button>
+			</form>
 		</div>
 	</div>
 </div>

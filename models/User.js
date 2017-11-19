@@ -8,7 +8,8 @@ const schema = new mongoose.Schema({
 			unique: true
 		}
 	},
-	password: String
+	password: String,
+	balance: String //secured via encrypt
 });
 
 module.exports = mongoose.model('User', schema);

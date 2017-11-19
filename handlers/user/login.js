@@ -18,15 +18,15 @@ module.exports = (req, res) => {
 			}
 
 			const hashedPassword = user.password;
-			return authHelper.isEqual(password, hashedPassword);
+			return [authHelper.isEqual(password, hashedPassword), user];
 		})
-		.then((status) => {
+		.spread((status, user) => {
 			if (status == false) {
 				throw Error('Wrong password');
 			}
 
 			//set user is logged in
-			req.session.user = username;
+			req.session.user = user;
 			res.redirect('/income');
 		})
 		.catch((error) => {

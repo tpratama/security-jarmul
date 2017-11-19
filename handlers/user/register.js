@@ -4,6 +4,7 @@ const Bluebird = require('bluebird');
 const md5 = require('md5');
 const authHelper = require('../../helpers/auth-helper');
 const flashHelper = require('../../helpers/flash-helper');
+const cryptHelper = require('../../helpers/crypt-helper');
 
 const user = Bluebird.promisifyAll(mongoose.model('User'));
 

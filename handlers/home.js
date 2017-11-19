@@ -1,16 +1,8 @@
 const _ = require('lodash');
+const flashHelper = require('../helpers/flash-helper');
 
 module.exports = (req, res) => {
-	const type = _.get(req.session, 'serverMessage.type', '');
-	const message = _.get(req.session, 'serverMessage.message', '');
-
-	let viewData = {};
-
-	if (req.session.serverMessage) {
-		viewData[type] = true;
-		viewData.serverMessage = message;
-	}
+	const serverMessage = flashHelper.extractServerMessage(req);
 	
-	req.session.serverMessage = null;
-	res.render('home', viewData);
+	res.render('home', serverMessage);
 };
