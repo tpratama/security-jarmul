@@ -34,8 +34,6 @@ module.exports = (req, res) => {
 				balance = 0;
 			}
 
-
-
 			console.log(balance);
 			return res.render('income', _.assign({
 				user: user,
