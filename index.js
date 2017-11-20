@@ -12,6 +12,8 @@ const db = require('./models/connection');
 
 const app = express();
 
+global.__basedir = __dirname;
+
 //Memakai handlebars sebagai templating engine
 app.engine('hbs', exphbs);
 app.set('view engine', 'hbs');
@@ -38,16 +40,13 @@ const authMiddleware = (req, res, next) => {
 app.get('/', require('./handlers/home'));
 app.get('/home', require('./handlers/home'));
 app.get('/income', authMiddleware, require('./handlers/income'));
-app.get('/tes', (req, res) => {
-	Bluebird.resolve()
-		.then(() => {
-			return cryptHelper.decryptFile(__dirname + '/build/uploads/image_1511110558743.jpg.dat', req.session.user);
-		})
-		.then(() => console.log("DONE"));
-})
+app.get('/download', authMiddleware, require('./handlers/common/download'));
+
 
 app.post('/home/register', require('./handlers/user/register'));
 app.post('/home/login', require('./handlers/user/login'));
-app.post('/income/create', require('./handlers/common/upload'), require('./handlers/income/create'));
+app.post('/income/create', authMiddleware, require('./handlers/common/upload'), require('./handlers/income/create'));
+
+app.get('/cek', require('./handlers/apakahnodecacat'));
 
 app.listen(3000, () => console.log('Server dijalankan pada port 3000'));

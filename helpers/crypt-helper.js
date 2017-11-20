@@ -1,7 +1,7 @@
 const _ = require('lodash');
 const aes = require('aes256');
 const Bluebird = require('bluebird');
-const encryptor = require('node-cipher');
+const encryptor = Bluebird.promisifyAll(require('node-cipher'));
 
 const SECRET = 'SECRET OYE 123';
 
@@ -21,7 +21,7 @@ exports.encryptFile = (filePath, user) => {
 		.then(() => {
 			const [path, ext] = filePath.split('.');
 			
-			return encryptor.encryptSync({
+			return encryptor.encryptAsync({
 				input:filePath, 
 				output: path + '.' + ext + '.dat',
 				password: SECRET + dynamicSalt
@@ -33,9 +33,9 @@ exports.decryptFile = (filePath, user) => {
 	const dynamicSalt = user._id;
 	return Bluebird.resolve()
 		.then(() => {
-			const [path, ext] = filePath.split('.');
+			const [path, ext, ext2] = filePath.split('.');
 			
-			return encryptor.decryptSync({
+			return encryptor.decryptAsync({
 				input:filePath, 
 				output: path + '.' + ext,
 				password: SECRET + dynamicSalt

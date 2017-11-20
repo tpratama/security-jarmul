@@ -25,7 +25,6 @@ module.exports = (req, res) => {
 			}
 
 			const encryptedCurrentBalance = _.get(user, 'balance');
-			console.log(encryptedCurrentBalance);
 			let balance;
 			try{
 				balance = cryptHelper.decrypt(encryptedCurrentBalance, user);	
@@ -34,9 +33,6 @@ module.exports = (req, res) => {
 				balance = 0;
 			}
 
-
-
-			console.log(balance);
 			return res.render('income', _.assign({
 				user: user,
 				categories: categories,

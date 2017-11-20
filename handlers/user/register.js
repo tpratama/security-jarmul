@@ -15,7 +15,7 @@ module.exports = (req, res) => {
 	const name = _.get(req.body, 'name');
 	const username = _.get(req.body, 'username');
 	const password = _.get(req.body, 'password');
-
+	
 	return Bluebird.resolve()
 		.then(() => {
 			if (_.includes([name, username, password], '')) {

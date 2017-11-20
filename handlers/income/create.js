@@ -11,12 +11,18 @@ const User = Bluebird.promisifyAll(mongoose.model('User'));
 
 module.exports = (req, res) => {
 	const userId = req.session.user._id;
-
+	
 	let incomeData = req.body;
 	incomeData.user = req.session.user._id;
 	
-	console.log(req.body);
-  
+	if (_.has(req, 'files.file.path')) {
+		let fileName = req.files.file.path.split('/');
+		fileName = fileName[fileName.length - 1];
+		incomeData.fileName = fileName;		
+	}
+
+	console.log(incomeData);
+	
 	return Bluebird.resolve()
 		.then(() => {
 			return Income.create(incomeData);
@@ -36,11 +42,7 @@ module.exports = (req, res) => {
 			};
 			
 			balance = Number(balance) + Number(incomeData.cost);
-
-			console.log(balance);
-
 			user.balance = cryptHelper.encrypt(String(balance), user);
-			console.log(user.balance);
 			return user.save();
 		})
 		.then(() => {
