@@ -32,6 +32,14 @@ module.exports = (req, res) => {
 		.then(() => cryptHelper.encryptFile(filePath, req.session.user))
 		.then(() => fs.unlink(filePath)) // delete decrypted file afterward
 		.catch((err) => {
+			Bluebird.resolve()
+				.then(() => fs.existsSync(filePath))
+				.then((status) => {
+					if (status) {
+						return fs.unlink(filePath);
+					}
+				});
+				
 			req.session.serverMessage = flashHelper.createErrorMessage('Error! ' + err.name);
 			res.redirect('/income');
 		});

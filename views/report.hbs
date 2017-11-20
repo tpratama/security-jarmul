@@ -1,0 +1,47 @@
+<html>
+<head>
+	{{> dependencies}}
+</head>
+<body>
+{{> header}}
+
+<div class="wraper">
+	<div class="row">
+		{{#if income}}
+		{{> sidebar-income
+			name=user.name
+			balance=balance
+		}}
+		{{else}}
+		{{> sidebar-expense
+			name=user.name
+			balance=balance
+		}}
+		{{/if}}
+		<div class="col-md-9">
+			{{> title-box title=title}}
+			{{> server-success-message}}
+			{{> server-error-message}}
+			
+			<div class="card-report-container">
+				{{#each reports}}
+					{{> card-report
+						cost=this.cost
+						date=this.date
+						category=this.category
+						note=this.note
+						link=this.link
+					}}
+				{{/each}}
+			</div>
+			
+		</div>
+	</div>
+</div>
+
+</body>
+<footer>
+<script src="https://unpkg.com/vue"></script>
+<script type="text/javascript" src="/js/pages/home.js"></script>
+</footer>
+</html>

@@ -40,13 +40,19 @@ const authMiddleware = (req, res, next) => {
 app.get('/', require('./handlers/home'));
 app.get('/home', require('./handlers/home'));
 app.get('/income', authMiddleware, require('./handlers/income'));
+app.get('/expense', authMiddleware, require('./handlers/expense'));
 app.get('/download', authMiddleware, require('./handlers/common/download'));
+app.get('/income/report', authMiddleware, require('./handlers/income-report'));
+app.get('/expense/report', authMiddleware, require('./handlers/expense-report'));
 
+app.get('/logout', authMiddleware, (req, res) => {
+	req.session.destroy();
+	res.redirect('/home');
+});
 
 app.post('/home/register', require('./handlers/user/register'));
 app.post('/home/login', require('./handlers/user/login'));
 app.post('/income/create', authMiddleware, require('./handlers/common/upload'), require('./handlers/income/create'));
-
-app.get('/cek', require('./handlers/apakahnodecacat'));
+app.post('/expense/create', authMiddleware, require('./handlers/common/upload'), require('./handlers/expense/create'));
 
 app.listen(3000, () => console.log('Server dijalankan pada port 3000'));

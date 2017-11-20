@@ -32,3 +32,4 @@ process.on('SIGINT', function() {
 require('./User');
 require('./Category');
 require('./Income');
+require('./Expense');

@@ -2,12 +2,12 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const Bluebird = require('bluebird');
 
-const Income = Bluebird.promisifyAll(mongoose.model('Income'));
+const Expense = Bluebird.promisifyAll(mongoose.model('Expense'));
 
-exports.findAllIncomesByUserId = (userId) => {
+exports.findAllExpensesByUserId = (userId) => {
 	return Bluebird.resolve()
 		.then(() => {
-			return Income.find({'user' : userId})
+			return Expense.find({'user' : userId})
 				.populate('user')
 				.populate('category')
 				.sort('-date');
@@ -18,7 +18,7 @@ exports.findAllIncomesByUserId = (userId) => {
 }
 
 // month is 1 based from January to Descember
-exports.findIncomesMonthByUserId = (userId, month) => {
+exports.findExpensesMonthByUserId = (userId, month) => {
 	const targetMonth = month - 1;
 
 	const currentDate = Date();
@@ -35,11 +35,11 @@ exports.findIncomesMonthByUserId = (userId, month) => {
 
 	return Bluebird.resolve()
 		.then(() => {
-			return Income.find(query)
+			return Expense.find(query)
 				.populate('user')
 				.populate('category');
 		})
-		.then((incomes) => {
-			return incomes;
+		.then((expense) => {
+			return expense;
 		})
 }

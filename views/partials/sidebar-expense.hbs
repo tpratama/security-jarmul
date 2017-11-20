@@ -1,0 +1,19 @@
+<div class="col-md-2 sidebar">
+	<div class="row">
+		<div class="col">
+			<h5><b>{{name}}</b></h5>
+			<h6>Balance : </br> <b>Rp. {{#if balance}}{{balance}}{{else}}0{{/if}}</b></h6>
+			<a href="/logout"><button class="danger-btn">Logout</button></a>
+			<hr>
+		</div>
+	</div>
+	<div class="row">
+		<div class="col">
+			<h4>Expense Menu</h4>
+			<div class="menu-sidebar">
+				<a href="/expense">Add new expense</a>
+				<a href="/expense/report">View expense reports</a>
+			</div>
+		</div>
+	</div>
+</div>

@@ -8,7 +8,6 @@ const cryptHelper = require('../../helpers/crypt-helper');
 
 const user = Bluebird.promisifyAll(mongoose.model('User'));
 
-
 module.exports = (req, res) => {
 	console.log(req.body);
 
@@ -28,7 +27,14 @@ module.exports = (req, res) => {
 				username: username,
 				password: authHelper.hash(password)
 			});
-		}).then(() => {
+		})
+		.then(() => user.findOne({username: username}))
+		.then((newUser) => {
+			console.log(newUser);
+			newUser.balance = cryptHelper.encrypt('0', newUser);
+			return newUser.save();
+		})
+		.then(() => {
 			req.session.serverMessage = flashHelper.createSuccessMessage(`Halo ${name}, anda berhasil mendaftarkan diri!`);
 			return res.redirect('/home');
 		})

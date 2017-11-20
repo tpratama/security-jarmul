@@ -14,7 +14,7 @@ module.exports = (req, res) => {
 
 	return Bluebird.resolve()
 		.then(() => {
-			return Bluebird.all([category.find({variant: 'INCOME'}), User.findOne({'_id': userId})]);
+			return Bluebird.all([category.find({variant: 'EXPENSE'}), User.findOne({'_id': userId})]);
 		})
 		.then((results) => {
 			const categories = results[0];
@@ -33,7 +33,7 @@ module.exports = (req, res) => {
 				balance = 0;
 			}
 
-			return res.render('income', _.assign({
+			return res.render('expense', _.assign({
 				user: user,
 				categories: categories,
 				balance: balance

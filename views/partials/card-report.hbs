@@ -1,0 +1,26 @@
+<div class="card-report">
+	<div class="card-report-left">
+		<h3>Rp. {{cost}}</h3>
+		<div class="card-report-info">
+			<div class="card-report-info-row">
+				<b>Category:</b><span>{{category}}</span>
+			</div>
+			<div class="card-report-info-row">
+				<b>Date:</b><span>{{date}}</span>
+			</div>
+			{{#if link}}
+			<div class="card-report-info-row">
+				<a href="{{link}}"><button class="btn-simple">Download File</button></a>
+			</div>
+			{{/if}}
+		</div>
+	</div>
+	<div class="card-report-right">
+		<h6>Notes</h6>
+		<div class="card-report-content">
+			<section>
+				{{note}}
+			</section>
+		</div>
+	</div>
+</div>
