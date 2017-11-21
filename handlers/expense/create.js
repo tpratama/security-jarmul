@@ -43,6 +43,7 @@ module.exports = (req, res) => {
 			
 			balance = Number(balance) - Number(expenseData.cost);
 			user.balance = cryptHelper.encrypt(String(balance), user);
+			req.session.user = user;
 			return user.save();
 		})
 		.then(() => {

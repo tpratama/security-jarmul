@@ -1,6 +1,6 @@
 const mongoose = require('mongoose');
 
-var dbURI = 'mongodb://jarmul:123456@localhost/jarmul';
+var dbURI = 'mongodb://root:empatmaret@localhost/jarmul';
 
 db = mongoose.connect(
 	dbURI,
