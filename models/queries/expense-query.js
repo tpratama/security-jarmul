@@ -17,6 +17,27 @@ exports.findAllExpensesByUserId = (userId) => {
 		})
 }
 
+exports.getExpenseById = (id) => {
+	return Expense.findOne({'_id': id}).populate('user');
+}
+
+exports.removeExpenseById = (id) => {
+	return Bluebird.resolve()
+		.then(() => {
+			return Expense.findOne({'_id': id});
+		})
+		.then((expense) => expense.remove());
+};
+
+exports.updateExpenseById = (id, newExpense) => {
+	const newExpensePrepared = _.pick(['cost', 'note', 'category', 'user', 'date', 'filename'], newExpense);
+
+	return Bluebird.resolve()
+		.then(() => Expense.findOne({'_id': id}))
+		.then((expense) => _.assign(expense, newExpense))
+		.then((expense) => expense.save());
+};
+
 // month is 1 based from January to Descember
 exports.findExpensesMonthByUserId = (userId, month) => {
 	const targetMonth = month - 1;

@@ -16,8 +16,9 @@ module.exports = (req, res) => {
 	return query.findAllIncomesByUserId(userId)
 		.then((incomes) => {
 			const viewData = _.map(incomes, (income) => {
-				let data = _.pick(income, ['cost', 'category', 'date', 'note', 'fileName']);
-				
+				let data = _.pick(income, ['_id', 'cost', 'category', 'date', 'note', 'fileName']);
+    			data.editLink = '/income/edit?id=' + income._id;
+				data.deleteLink = '/income/delete';
 				if (data.date) data.date = new Date(income.date).toLocaleDateString('id-ID');
 				if (data.category) data.category = data.category.name;
 

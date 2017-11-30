@@ -9,6 +9,7 @@ const cryptHelper = require('../../helpers/crypt-helper');
 const user = Bluebird.promisifyAll(mongoose.model('User'));
 
 module.exports = (req, res) => {
+	debugger;
 	console.log(req.body);
 
 	const name = _.get(req.body, 'name');
@@ -30,7 +31,9 @@ module.exports = (req, res) => {
 		})
 		.then(() => user.findOne({username: username}))
 		.then((newUser) => {
-			console.log(newUser);
+		debugger;
+			console.log('aaaa');
+			console.log('CCCCCCCCCCCCC', newUser);
 			newUser.balance = cryptHelper.encrypt('0', newUser);
 			return newUser.save();
 		})

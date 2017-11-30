@@ -26,12 +26,15 @@
 			<div class="card-report-container">
 				{{#each reports}}
 					{{> card-report
+                        id=this._id
 						cost=this.cost
 						date=this.date
 						category=this.category
 						note=this.note
 						link=this.link
 						image=this.link
+                        deleteLink=this.deleteLink
+                        editLink=this.editLink
 					}}
 				{{/each}}
 			</div>

@@ -9,7 +9,8 @@ const schema = new mongoose.Schema({
 		}
 	},
 	password: String,
-	balance: String //secured via encrypt
+	balance: String, //secured via encrypt
+	isAdmin: Boolean
 });
 
 module.exports = mongoose.model('User', schema);

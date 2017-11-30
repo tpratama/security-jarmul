@@ -15,7 +15,29 @@ exports.findAllIncomesByUserId = (userId) => {
 		.then((incomes) => {
 			return incomes;
 		})
+};
+
+exports.getIncomeById = (id) => {
+    return Income.findOne({'_id': id}).populate('user');
 }
+
+exports.removeIncomeById = (id) => {
+    return Bluebird.resolve()
+        .then(() => {
+        return Income.findOne({'_id': id});
+	})
+	.then((income) => income.remove());
+};
+
+exports.updateIncomeById = (id, newExpense) => {
+    const newExpensePrepared = _.pick(['cost', 'note', 'category', 'user', 'date', 'filename'], newExpense);
+
+    return Bluebird.resolve()
+        .then(() => Income.findOne({'_id': id}))
+		.then((income) => _.assign(income, newExpense))
+		.then((income) => expense.save());
+};
+
 
 // month is 1 based from January to Descember
 exports.findIncomesMonthByUserId = (userId, month) => {

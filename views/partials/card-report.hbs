@@ -12,7 +12,17 @@
 			<div class="card-report-info-row">
 				<a href="{{link}}"><button class="btn-simple">Download File</button></a>
 			</div>
-			<div class="card-report-info-row">
+            <div class="card-report-info-row">
+                <a href="{{editLink}}"><button class="btn-simple">Edit</button></a>
+            </div>
+
+            <div class="card-report-info-row">
+                <form action="{{deleteLink}}" method="POST">
+                    <input hidden name="id" value="{{id}}">
+                    <button class="btn-simple">Delete</button></a>
+                </form>
+            </div>
+            <div class="card-report-info-row">
 				<img src="{{ image }}" class="img-responsive">
 			</div>
 			{{/if}}
