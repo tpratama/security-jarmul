@@ -24,7 +24,9 @@ app.use(session({
 	secret: 'jarmul security',
 	cookie: {
 		maxAge: 24*60*60
-	}
+	},
+	saveUninitialized: true,
+	resave: true,
 }));
 
 app.use(bodyParser.json());
