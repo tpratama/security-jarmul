@@ -34,7 +34,7 @@ module.exports = (req, res) => {
         })
         .then(() => expenseQuery.removeExpenseById(expenseId))
         .then(() => {
-            req.session.serverMessage = flashHelper.createSuccessMessage('Success saving expense..');
+            req.session.serverMessage = flashHelper.createSuccessMessage('Success deleting expense..');
             res.redirect('/expense');
         });
 };

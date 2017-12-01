@@ -38,7 +38,7 @@ module.exports = (req, res) => {
         })
         .then(() => incomeQuery.removeIncomeById(incomeId))
         .then(() => {
-            req.session.serverMessage = flashHelper.createSuccessMessage('Success saving income..');
+            req.session.serverMessage = flashHelper.createSuccessMessage('Success deleting income..');
             res.redirect('/income');
         });
 };
