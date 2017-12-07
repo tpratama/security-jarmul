@@ -22,7 +22,15 @@ module.exports = (req, res) => {
 		})
 		.spread((status, user) => {
 			if (status == false) {
-				throw Error('Wrong password');
+
+				if (!_.has(req.session, 'tryCount')) req.session.tryCount = 0;
+				else req.session.tryCount+=1;
+
+				console.log(req.session.tryCount);
+				if (req.session.tryCount > 3) {
+					throw Error('Your session blocked! Please try again later...');
+				}
+				else throw Error('Wrong password');
 			}
 
 			//set user is logged in
