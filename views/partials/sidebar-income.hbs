@@ -3,7 +3,9 @@
 		<div class="col">
 			<h5><b>{{name}}</b></h5>
 			<h6>Balance : </br> <b>Rp. {{#if balance}}{{balance}}{{else}}0{{/if}}</b></h6>
-			<a href="/logout"><button class="danger-btn">Logout</button></a>
+            <h6>Income : </br> <b>Rp. {{#if totalIncome}}{{totalIncome}}{{else}}0{{/if}}</b></h6>
+            <h6>Expense : </br> <b>Rp. {{#if totalExpense}}{{totalExpense}}{{else}}0{{/if}}</b></h6>
+            <a href="/logout"><button class="danger-btn">Logout</button></a>
 			<hr>
 		</div>
 	</div>

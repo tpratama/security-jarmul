@@ -1,3 +1,5 @@
+"use strict";
+
 const _ = require('lodash');
 const mongoose = require('mongoose');
 const Bluebird = require('bluebird');
@@ -11,15 +13,22 @@ exports.findAllIncomesByUserId = (userId) => {
 				.populate('user')
 				.populate('category')
 				.sort('-date');
-		})
-		.then((incomes) => {
-			return incomes;
-		})
+		});
+};
+
+exports.findTotalIncomesByUserId = (userId) => {
+	// This is not correct style to find sum, i want faster development
+	const sumReducer = (key) => (arr) => _.reduce(arr, (res, data) => {
+        return res + data[key];
+    }, 0);
+
+	return exports.findAllIncomesByUserId(userId)
+		.then(sumReducer('cost'));
 };
 
 exports.getIncomeById = (id) => {
     return Income.findOne({'_id': id}).populate('user');
-}
+};
 
 exports.removeIncomeById = (id) => {
     return Bluebird.resolve()
@@ -63,5 +72,5 @@ exports.findIncomesMonthByUserId = (userId, month) => {
 		})
 		.then((incomes) => {
 			return incomes;
-		})
-}
+		});
+};

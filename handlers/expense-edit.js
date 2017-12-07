@@ -4,7 +4,7 @@ const Bluebird = require('bluebird');
 
 const category = Bluebird.promisifyAll(mongoose.model('Category'));
 const User = Bluebird.promisifyAll(mongoose.model('User'));
-const query = require('../models/queries/expense-query');
+const common = require('../helpers/common');
 
 const cryptHelper = require('../helpers/crypt-helper');
 const flashHelper = require('../helpers/flash-helper');
@@ -35,16 +35,12 @@ module.exports = (req, res) => {
         balance = 0;
     }
 
-
-    return query.getExpenseById(expenseId)
-            .then((expense) => {
-                return res.render('expense-edit', _.assign({
-                    user: user,
-                    categories: categories,
-                    balance: balance,
-                    id: expenseId,
-                    formFilling: expense
-                }, serverMessage));
-            });
+    return common.generateCommonViewData(userId)
+        .then((commonViewData) => res.render('expense-edit', _.assign({
+            user: user,
+            categories: categories,
+            balance: balance,
+            id: expenseId
+        }, serverMessage, commonViewData)));
 });
 };

@@ -26,30 +26,30 @@ module.exports = (req, res) => {
     console.log('aaaaaaaaaaa', expenseData);
     return Bluebird.resolve()
         .then(() => Bluebird.all(
-        [expenseQuery.getExpenseById(expenseId),
-            User.findOne({'_id': userId})
-        ]))
-.spread((oldData, user) => {
-        const encryptedCurrentBalance = user.balance;
-    let balance = 0;
+            [expenseQuery.getExpenseById(expenseId),
+                User.findOne({'_id': userId})
+            ]))
+        .spread((oldData, user) => {
+            const encryptedCurrentBalance = user.balance;
+            let balance = 0;
 
-    try{
-        balance = cryptHelper.decrypt(encryptedCurrentBalance, user);
-    }
-    catch(e) {
-        balance = 0;
-    };
+            try{
+                balance = cryptHelper.decrypt(encryptedCurrentBalance, user);
+            }
+            catch(e) {
+                balance = 0;
+            };
 
-    console.log(expenseData);
-    balance = Number(balance) + Number(oldData.cost) - Number(expenseData.cost);
-    user.balance = cryptHelper.encrypt(String(balance), user);
-    req.session.user = user;
+            console.log(expenseData);
+            balance = Number(balance) + Number(oldData.cost) - Number(expenseData.cost);
+            user.balance = cryptHelper.encrypt(String(balance), user);
+            req.session.user = user;
 
-    _.assign(oldData, expenseData);
-    return Bluebird.all([user.save(), oldData.save()]);
-})
-.then(() => {
-        req.session.serverMessage = flashHelper.createSuccessMessage('Success saving expense..');
-    res.redirect('/expense/report');
-});
+            _.assign(oldData, expenseData);
+            return Bluebird.all([user.save(), oldData.save()]);
+        })
+        .then(() => {
+            req.session.serverMessage = flashHelper.createSuccessMessage('Success saving expense..');
+            res.redirect('/expense/report');
+        });
 };

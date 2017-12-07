@@ -2,7 +2,8 @@ const _ = require('lodash');
 const mongoose = require('mongoose');
 const Bluebird = require('bluebird');
 
-const query = require('../models/queries/expense-query'); 
+const query = require('../models/queries/expense-query');
+const common = require('../helpers/common');
 
 const cryptHelper = require('../helpers/crypt-helper');
 const flashHelper = require('../helpers/flash-helper');
@@ -32,11 +33,12 @@ module.exports = (req, res) => {
 
 			return Bluebird.all([cryptHelper.decrypt(encryptedCurrentBalance, user), viewData]);
 		})
-		.spread((balance, viewData) => res.render('report', {
-			reports: viewData,
-			title: 'Expense Report',
-			user: user,
-			balance: balance,
-			expense: true
-		}));
+		.spread((balance, viewData) => common.generateCommonViewData(userId)
+			.then((commonViewData) => res.render('report', _.assign({
+				reports: viewData,
+				title: 'Expense Report',
+				user: user,
+				balance: balance,
+				expense: true
+			}, commonViewData))));
 }

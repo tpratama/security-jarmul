@@ -4,6 +4,7 @@ const Bluebird = require('bluebird');
 
 const category = Bluebird.promisifyAll(mongoose.model('Category'));
 const User = Bluebird.promisifyAll(mongoose.model('User'));
+const common = require('../helpers/common');
 
 const cryptHelper = require('../helpers/crypt-helper');
 const flashHelper = require('../helpers/flash-helper');
@@ -33,10 +34,13 @@ module.exports = (req, res) => {
 				balance = 0;
 			}
 
-			return res.render('income', _.assign({
-				user: user,
-				categories: categories,
-				balance: balance
-			}, serverMessage));
+			return common.generateCommonViewData(userId)
+				.then((viewData) => {
+                    return res.render('income', _.assign({
+                        user: user,
+                        categories: categories,
+                        balance: balance
+                    }, serverMessage, viewData));
+				})
 		});
 };

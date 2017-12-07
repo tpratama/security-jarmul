@@ -15,11 +15,21 @@ exports.findAllExpensesByUserId = (userId) => {
 		.then((incomes) => {
 			return incomes;
 		})
-}
+};
 
 exports.getExpenseById = (id) => {
 	return Expense.findOne({'_id': id}).populate('user');
-}
+};
+
+exports.findTotalExpensesByUserId = (userId) => {
+    // This is not correct style to find sum, i want faster development
+    const sumReducer = (key) => (arr) => _.reduce(arr, (res, data) => {
+        return res + data[key];
+    }, 0);
+
+    return exports.findAllExpensesByUserId(userId)
+        .then(sumReducer('cost'));
+};
 
 exports.removeExpenseById = (id) => {
 	return Bluebird.resolve()
