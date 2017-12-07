@@ -39,7 +39,7 @@ app.use(bodyParser.urlencoded({extended: false}));
 //middleware catch unauthorize user
 //bounce if not logged in
 const authMiddleware = (req, res, next) => {
-	if (req.session.tryCount>3) res.redirect('/home');
+	if (req.session.tryCount>3) return res.redirect('/home');
 	
 	if (req.session.user) return next();
 	res.redirect('/home');
